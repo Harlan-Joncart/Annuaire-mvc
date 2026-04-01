@@ -2,69 +2,75 @@
 
 require_once __DIR__ . '/../Models/SiteModel.php';
 
-/**
- * Description of SiteController
- *
- * @author Kevin
- */
 class SiteController {
 
     private $_model;
 
-    /**
-     * Instancie notre model
-     */
     public function __construct() {
         $this->_model = new SiteModel();
     }
 
-    /**
-     * Retourne un tableau associatif
-     * @return Array
-     */
     public function list() {
-        return ["titre" => "Listing des sites",
+        return [
+            "titre" => "Listing des sites",
             "description" => "Liste des sites",
             "sites" => $this->_model->list()
         ];
     }
 
     public function add() {
-        return ["titre" => "Ajout des sites",
-            "description" => "Ajout des sites"
+        return [
+            "titre" => "Ajout d'un site",
+            "description" => "Ajouter un site"
         ];
     }
 
     public function delete() {
-        $id = filter_var(strip_tags(trim($_GET['id'])), FILTER_SANITIZE_NUMBER_INT);
-        $this->_model->delete($id);
+        $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+        $this->_model->delete((int)$id);
         header("location: index.php?page=site&action=list");
         exit;
     }
 
     public function insert() {
-        if (isset($_POST['libelle'])) {
-            $libelle = filter_var(strip_tags(trim($_POST['libelle'])), FILTER_SANITIZE_STRING);
-            $this->_model->insert($libelle);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $url = filter_input(INPUT_POST, 'url', FILTER_SANITIZE_URL);
+            $titre = filter_input(INPUT_POST, 'titre', FILTER_SANITIZE_STRING);
+            $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
+            $categorie_id = filter_input(INPUT_POST, 'categorie_id', FILTER_SANITIZE_NUMBER_INT);
+            $utilisateur_id = filter_input(INPUT_POST, 'utilisateur_id', FILTER_SANITIZE_NUMBER_INT);
+
+            $this->_model->insert($url, $titre, $description, (int)$categorie_id, (int)$utilisateur_id);
+
             header("location: index.php?page=site&action=list");
             exit;
-        } else {
-            header("location: index.php?page=site&action=add");
         }
     }
 
     public function update() {
-        if ($_SERVER['REQUEST_METHOD'] == "GET") {
-            return ["titre" => "Ajout des sites",
-                "description" => "Ajout des sites",
-                "site" => $this->_model->selectById((int) $_GET['id'])
+
+        if ($_SERVER['REQUEST_METHOD'] === "GET") {
+            return [
+                "titre" => "Modification du site",
+                "description" => "Modifier un site",
+                "site" => $this->_model->selectById((int)$_GET['id'])
             ];
-        } elseif($_SERVER['REQUEST_METHOD'] == "POST") {
-            $libelle = filter_var(strip_tags(trim($_POST['libelle'])), FILTER_SANITIZE_STRING);
-            $id = filter_var(strip_tags(trim($_POST['id'])), FILTER_SANITIZE_STRING);
-            $this->_model->update($id, $libelle);
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+
+            $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
+            $url = filter_input(INPUT_POST, 'url', FILTER_SANITIZE_URL);
+            $titre = filter_input(INPUT_POST, 'titre', FILTER_SANITIZE_STRING);
+            $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
+            $categorie_id = filter_input(INPUT_POST, 'categorie_id', FILTER_SANITIZE_NUMBER_INT);
+            $utilisateur_id = filter_input(INPUT_POST, 'utilisateur_id', FILTER_SANITIZE_NUMBER_INT);
+
+            $this->_model->update((int)$id, $url, $titre, $description, (int)$categorie_id, (int)$utilisateur_id);
+
             header("location: index.php?page=site&action=list");
+            exit;
         }
     }
-
 }
