@@ -22,8 +22,8 @@
                     <td><a href="{$site.url}" target="_blank">{$site.url}</a></td>
                     <td>{$site.titre}</td>
                     <td>{$site.description}</td>
-                    <td>{$site.categorie_id}</td>
-                    <td>{$site.utilisateur_id}</td>
+                    <td>{$site.categorie_nom}</td>
+                    <td>{$site.utilisateur_mail}</td>
                     <td>
                         <a class="btn btn-primary" href="index.php?page=site&action=update&id={$site.id}">Modification</a>
                         | 

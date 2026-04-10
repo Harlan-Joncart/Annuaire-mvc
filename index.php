@@ -6,41 +6,17 @@ error_reporting(E_ALL);
 
 //todo gérer le coeur de l'appli en POO
 //Chargement du moteur de template Smarty
-require_once('libs/smarty/Smarty.class.php');
-$smarty = new Smarty();
-$smarty->template_dir = 'Views/templates/';
-$smarty->compile_dir = 'Views/templates_c/';
-$smarty->config_dir = 'Views/configs/';
-$smarty->cache_dir = 'Views/cache/';
+require_once('libs/Smarty.class.php');
+$smarty = new \Smarty\Smarty;
 
-// Routeur (gestion des routes)
-$page = isset($_GET['page']) ? $_GET['page'] : 'Accueil';
-$pages = array('categorie' => 'CategoryController',
-    'site' => 'SiteController',
-    'utilisateur' => 'UserController',
-    'Accueil' => 'HomeController',
-    '' => 'HomeController'
-);
-$action = (isset($_GET['action'])) ? $_GET['action'] : 'list';
-/**
- * Exemple d'utilisation index.php?page=categorie&action=list
- */
-if (array_key_exists($page, $pages)) {
-    require("Controllers/" . $pages[$page] . ".php");
-    $ctrl = new $pages[$page]();
-    
-    if (method_exists($ctrl, $action)) {
-        // chargement du chemin de la vue dans une variable Smarty
-        $smarty->assign('tpl', $page . '/' . $action . '.tpl');
-        // Chargement du tableau associative des controlleurs pour ma vue.
-        $smarty->assign('vue', $ctrl->{$action}());
-        $smarty->display('index.tpl');
-    } else {
-        http_response_code(404);
-        //todo: 404
-    }
-} else {
-    //todo:404
-    http_response_code(404);
-}
+$smarty->setTemplateDir('Views/templates/');
+$smarty->setCompileDir('templates_c/');
+$smarty->setConfigDir('Views/configs/');
+$smarty->setCacheDir('Views/cache/');
+
+// Router
+require_once __DIR__ . '/core/Router.php';
+
+$router = new Router($smarty);
+$router->handleRequest();
  

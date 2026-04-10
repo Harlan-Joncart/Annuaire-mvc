@@ -2,13 +2,6 @@
 
 require_once __DIR__ . '/../core/Model.php';
 
-/**
- * Description of SiteModel
- *
- * @author Kevin
- * @version 1.0.0
- * 
- */
 class SiteModel extends Model {
 
     public function __construct() {
@@ -31,14 +24,6 @@ class SiteModel extends Model {
         $sth->bindParam(':description', $unDescription, PDO::PARAM_STR);
         $sth->bindParam(':categorie_id', $unCategorieId, PDO::PARAM_INT);
         $sth->bindParam(':utilisateur_id', $unUtilisateurId, PDO::PARAM_INT);
-        //  $this->_pdo->debugDumpParams();
-        return $sth->execute();
-    }
-
-    public function delete(int $unId) {
-        $sth = $this->_pdo->prepare("delete from " . $this->_table .
-                " where id = :id");
-        $sth->bindParam(':id', $unId, PDO::PARAM_INT);
         //  $this->_pdo->debugDumpParams();
         return $sth->execute();
     }
@@ -74,5 +59,23 @@ class SiteModel extends Model {
         $sth->execute();
         return $sth->fetchAll();
     }
+
+    public function selectAllWithDetails() {
+        $sql = "SELECT 
+                    site.id,
+                    site.url,
+                    site.titre,
+                    site.description,
+                    categorie.libelle AS categorie_nom,
+                    utilisateur.mail AS utilisateur_mail
+                FROM site
+                JOIN categorie ON site.categorie_id = categorie.id
+                JOIN utilisateur ON site.utilisateur_id = utilisateur.id";
+
+        $sth = $this->_pdo->prepare($sql);
+        $sth->execute();
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
 }

@@ -2,11 +2,6 @@
 
 require_once __DIR__ . '/Db.php';
 
-/**
- * Description of Model
- *
- * @author Kevin
- */
 class Model {
 
     protected $_pdo;
@@ -27,6 +22,14 @@ class Model {
     public function list() {
         $sql = "select * from " . $this->_table;
         return $this->_pdo->query($sql);
+    }
+
+    public function delete(int $unId) {
+        $sth = $this->_pdo->prepare("delete from " . $this->_table .
+                " where id = :id");
+        $sth->bindParam(':id', $unId, PDO::PARAM_INT);
+        //  $this->_pdo->debugDumpParams();
+        return $sth->execute();
     }
 
 }

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Description of Db
- * Db est un singleton permettant d'acceder à notre SGBDR
- * 
- * @author Kevin
- */
 class Db {
     private static $_instance = null;
     private $_pdo;

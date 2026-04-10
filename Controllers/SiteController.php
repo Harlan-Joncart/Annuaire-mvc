@@ -14,7 +14,7 @@ class SiteController {
         return [
             "titre" => "Listing des sites",
             "description" => "Liste des sites",
-            "sites" => $this->_model->list()
+            "sites" => $this->_model->selectAllWithDetails()
         ];
     }
 

@@ -2,13 +2,6 @@
 
 require_once __DIR__ . '/../core/Model.php';
 
-/**
- * Description of CategoryModel
- *
- * @author Kevin
- * @version 1.0.0
- * 
- */
 class CategoryModel extends Model {
 
     public function __construct() {
@@ -27,14 +20,6 @@ class CategoryModel extends Model {
         $sth = $this->_pdo->prepare("insert into " . $this->_table .
                 " (libelle) values(:libelle)");
         $sth->bindParam(':libelle', $unLlibelle, PDO::PARAM_STR);
-        //  $this->_pdo->debugDumpParams();
-        return $sth->execute();
-    }
-
-    public function delete(int $unId) {
-        $sth = $this->_pdo->prepare("delete from " . $this->_table .
-                " where id = :id");
-        $sth->bindParam(':id', $unId, PDO::PARAM_INT);
         //  $this->_pdo->debugDumpParams();
         return $sth->execute();
     }
