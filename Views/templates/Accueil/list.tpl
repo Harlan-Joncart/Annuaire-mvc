@@ -1,14 +1,16 @@
-<h2>Presentation du MVC</h2>
-<p>{$vue.description}<p>
-<div>
-    Liste des dossiers de notre MVC:
-    <ul>
-{foreach $vue.mvc as $m}
-        <li>{$m}</li>
-{/foreach}
-    </ul>
-    <form action="index.php?page=analyse&action=check" method="post">
-    <input type="url" name="site"  placeholder="https://example.com" pattern="https://.*" required>
-    <input type="submit">
-    </form>
+<div class="card">
+    <div class="card-header">
+        <h2>Présentation du MVC</h2>
+    </div>
+    <div class="card-body">
+        <p class="description">{$vue.description}</p>
+        
+        <h3>Structure du projet</h3>
+        <p>Liste des dossiers de notre MVC :</p>
+        <ul class="folder-list">
+            {foreach $vue.mvc as $m}
+                <li><strong>{$m}</strong></li>
+            {/foreach}
+        </ul>
+    </div>
 </div>

@@ -1,27 +1,28 @@
-<h2>
-    <a class="btn btn-primary" href="index.php?page=user&action=add">Ajouter</a>
-</h2>
+<div class="actions-bar">
+    <a class="btn btn-primary" href="index.php?page=user&action=add">Ajouter un utilisateur</a>
+</div>
 
-<p>{$vue.description}</p>    
+<p class="description">{$vue.description}</p>    
 
-<div>
+<div class="table-responsive">
     <table class="table">
         <thead>
             <tr>
-                <td>Mail</td>
-                <td>Paramètres</td>
-                <td>Action</td>
+                <th>Mail</th>
+                <th>Paramètres</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             {foreach $vue.users as $user}
                 <tr>
-                    <td>{$user.mail}</td>
+                    <td><strong>{$user.mail}</strong></td>
                     <td>{$user.params}</td>
                     <td>
-                        <a class="btn btn-primary" href="index.php?page=user&action=update&id={$user.id}">Modification</a>
-                        | 
-                        <a class="btn btn-danger" href="#" onclick="sup({$user.id});">Suppression</a>
+                        <div class="action-links">
+                            <a class="btn btn-primary" href="index.php?page=user&action=update&id={$user.id}">Modifier</a>
+                            <a class="btn btn-danger" href="#" onclick="sup({$user.id});">Supprimer</a>
+                        </div>
                     </td>
                 </tr>
             {/foreach}

@@ -1,33 +1,34 @@
-<h2>
-    <a class="btn btn-primary" href="index.php?page=site&action=add">Ajouter</a>
-</h2>
+<div class="actions-bar">
+    <a class="btn btn-primary" href="index.php?page=site&action=add">Ajouter un site</a>
+</div>
 
-<p>{$vue.description}</p>    
+<p class="description">{$vue.description}</p>    
 
-<div>
+<div class="table-responsive">
     <table class="table">
         <thead>
             <tr>
-                <td>URL</td>
-                <td>Titre</td>
-                <td>Description</td>
-                <td>Catégorie</td>
-                <td>Utilisateur</td>
-                <td>Action</td>
+                <th>URL</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Catégorie</th>
+                <th>Utilisateur</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             {foreach $vue.sites as $site}
                 <tr>
                     <td><a href="{$site.url}" target="_blank">{$site.url}</a></td>
-                    <td>{$site.titre}</td>
+                    <td><strong>{$site.titre}</strong></td>
                     <td>{$site.description}</td>
-                    <td>{$site.categorie_nom}</td>
+                    <td><span class="badge bg-primary">{$site.categorie_nom}</span></td>
                     <td>{$site.utilisateur_mail}</td>
                     <td>
-                        <a class="btn btn-primary" href="index.php?page=site&action=update&id={$site.id}">Modification</a>
-                        | 
-                        <a class="btn btn-danger" href="#" onclick="sup({$site.id});">Suppression</a>
+                        <div class="action-links">
+                            <a class="btn btn-primary" href="index.php?page=site&action=update&id={$site.id}">Modifier</a>
+                            <a class="btn btn-danger" href="#" onclick="sup({$site.id});">Supprimer</a>
+                        </div>
                     </td>
                 </tr>
             {/foreach}

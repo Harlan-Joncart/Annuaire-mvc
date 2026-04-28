@@ -17,8 +17,8 @@ class HomeController {
      */
     public function list() {
         $mvc = ["Models","Views","Controllers", "libs"];
-        return ["titre" => "Audit référencement de site web",
-            "description" => "Seo café audit votre site web, simplement et compréhensible par tous.",
+        return ["titre" => "Les Pages Orange",
+            "description" => "Annuaire de sites web - Les Pages Orange.",
             "mvc"=>$mvc
         ];
     }
