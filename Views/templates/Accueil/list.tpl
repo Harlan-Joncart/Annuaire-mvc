@@ -6,7 +6,7 @@
         <p class="description">{$vue.description}</p>
         
         <h3>Structure du projet</h3>
-        <p>Liste des dossiers de notre MVC :</p>
+        <p>Liste des dossiers principaux de notre MVC :</p>
         <ul class="folder-list">
             {foreach $vue.mvc as $m}
                 <li><strong>{$m}</strong></li>
